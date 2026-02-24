@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import {User,Code,LogOut} from "lucide-react"
 import { useAuthStore } from '../store/useAuthStore'
 import LogoutButton from './LogoutButton'
-import bmwLogo from "../assets/xhamster-3.svg";
+import bmwLogo from "../assets/bmw-logo-svgrepo-com.svg";
 
 
 const Navbar = () => {
@@ -15,25 +15,25 @@ const Navbar = () => {
         <Link to="/" className="flex items-center gap-3 cursor-pointer">
           <img
             src={bmwLogo}
-            className="h-18 w-18 bg-primary/20 text-primary border-none px-2 py-2 rounded-full"
+            className="h-18 w-18 bg-white text-primary border-none px-2 py-2 rounded-full"
           />
-          <span className="text-lg md:text-2xl font-bold tracking-tight text-white hidden md:block">
-            Leetlab
+          <span className="text-lg  md:text-4xl font-bold tracking-tight text-white hidden md:block">
+            CODE-MODE
           </span>
         </Link>
 
         {/* User Profile and Dropdown */}
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-1">
           <div className="dropdown dropdown-end">
             <label
               tabIndex={0}
-              className="btn btn-ghost btn-circle avatar flex flex-row "
+              className="btn btn-ghost btn-circle avatar flex flex-row H-22 w-22 rounded-full"
             >
-              <div className="w-10 rounded-full ">
+              <div className="   rounded-full ">
                 <img
                   src={
                     authUser?.image ||
-                    "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250"
+                    "https://miro.medium.com/1*izKOs67pnMyPwC9tx-Qq_A.jpeg"
                   }
                   alt="User Avatar"
                   className="object-cover"
