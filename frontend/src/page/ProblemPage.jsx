@@ -25,10 +25,11 @@ const ProblemPage = () => {
   const { getProblemById, problem, isProblemLoading } = useProblemStore();
   const [code, setCode] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("javascript");
-  const [activeTab, setactiveTab] = useState("description");
+  const [activeTab, setActiveTab] = useState("description");
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [testcases, setTestCases] = useState([]);
   const submissionCount = 10;
+  const submission = false;
   const handleLanguageChange = (e) => {
     const lang = e.target.value;
     setSelectedLanguage(lang);
@@ -41,7 +42,7 @@ const ProblemPage = () => {
   console.log(problem);
   useEffect(() => {
     if (problem) {
-      setCode(problem.codeSnippets?.[selectedLanguage] || "");
+      setCode (problem.codeSnippets?.[selectedLanguage] || "");
       setTestCases(
         problem.testcases?.map((tc) => ({
           input: tc.input,
@@ -157,8 +158,8 @@ const ProblemPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-base-300 to-base-200 max-w-7xl w-full">
-      <nav className="navbar bg-base-100 shadow-lg px-4">
+    <div className="min-h-screen bg-gradient-to-br from-base-300 to-base-200 max-w-10xl ">
+      <nav className="navbar bg-base-100 shadow-lg px-4 ">
         <div className="flex-1 gap-2">
           <Link to={"/"} className="flex items-center gap-2 text-primary">
             <Home className="w-6 h-6" />
@@ -210,7 +211,7 @@ const ProblemPage = () => {
           </select>
         </div>
       </nav>
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto p-4 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="card bg-base-100 shadow-xl">
             <div className="card-body p-0">
@@ -275,7 +276,7 @@ const ProblemPage = () => {
                   onChange={(value) => setCode(value || "")}
                   options={{
                     minimap: { enabled: false },
-                    fontSize: 20,
+                    fontSize: 17,
                     lineNumbers: "on",
                     roundedSelection: false,
                     scrollBeyondLastLine: false,
@@ -289,8 +290,7 @@ const ProblemPage = () => {
                 <div className="flex justify-between items-center">
                   <button
                     className={`btn btn-primary gap-2 `}
-                    onClick={()=>{}}
-                    
+                    onClick={() => {}}
                   >
                     {<Play className="w-4 h-4" />}
                     Run Code
@@ -302,7 +302,38 @@ const ProblemPage = () => {
               </div>
             </div>
           </div>
-          </div>
+        </div>
+      </div>
+      <div className="card bg-base-100 shadow-xl mt-6">
+        <div className="card-body">
+          {submission ? (
+            <Submission submission={submission} />
+          ) : (
+            <>
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-bold">Test Cases</h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="table table-zebra w-full">
+                  <thead>
+                    <tr>
+                      <th>Input</th>
+                      <th>Expected Output</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {testcases.map((testCase, index) => (
+                      <tr key={index}>
+                        <td className="font-mono">{testCase.input}</td>
+                        <td className="font-mono">{testCase.output}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
