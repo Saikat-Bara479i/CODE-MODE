@@ -18,6 +18,9 @@ import {
   Home,
 } from "lucide-react";
 import { useProblemStore } from "../store/useProblemStore";
+import { useExecutionStore } from "../store/useExecuteStore";
+import { getLanguageId,getLanguageName } from "../lib/lang";
+import SubmissionResults from "../componants/Submission"
 
 const ProblemPage = () => {
   const { id } = useParams();
@@ -29,7 +32,8 @@ const ProblemPage = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [testcases, setTestCases] = useState([]);
   const submissionCount = 10;
-  const submission = false;
+  
+  const { executeCode, submission, isExecuting } = useExecutionStore();
   const handleLanguageChange = (e) => {
     const lang = e.target.value;
     setSelectedLanguage(lang);
@@ -145,7 +149,18 @@ const ProblemPage = () => {
         return null;
     }
   };
+const handelruncode = (e)=>{
+  e.preventDefault()
+  try{
+    const language_id = getLanguageId(selectedLanguage);
+    const stdin = problem.testcases.map((tc)=>tc.input)
+    const expected_output = problem.testcases.map((tc)=>tc.output)
+    executeCode(code, language_id, stdin, expected_output, id);
 
+  }catch(err){
+
+  }
+}
   if (isProblemLoading || !problem) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-base-300 to-base-200 flex items-center justify-center">
@@ -289,10 +304,11 @@ const ProblemPage = () => {
               <div className="p-4 border-t border-base-300 bg-base-200">
                 <div className="flex justify-between items-center">
                   <button
-                    className={`btn btn-primary gap-2 `}
-                    onClick={() => {}}
+                    className={`btn btn-primary gap-2 ${isExecuting ? "loading": ""} `}
+                    onClick={handelruncode}
+                    disabled={isExecuting}
                   >
-                    {<Play className="w-4 h-4" />}
+                    {!isExecuting && <Play className="w-4 h-4" />}
                     Run Code
                   </button>
                   <button className="btn btn-success gap-2">
@@ -307,7 +323,7 @@ const ProblemPage = () => {
       <div className="card bg-base-100 shadow-xl mt-6">
         <div className="card-body">
           {submission ? (
-            <Submission submission={submission} />
+            <SubmissionResults submission={submission}/>
           ) : (
             <>
               <div className="flex items-center justify-between mb-6">
