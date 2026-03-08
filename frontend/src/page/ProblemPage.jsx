@@ -19,20 +19,27 @@ import {
 } from "lucide-react";
 import { useProblemStore } from "../store/useProblemStore";
 import { useExecutionStore } from "../store/useExecuteStore";
-import { getLanguageId,getLanguageName } from "../lib/lang";
-import SubmissionResults from "../componants/Submission"
+import { getLanguageId } from "../lib/lang";
+import Submission from "../componants/Submission";
+import SubmissionList from "../componants/SubmissionList";
+import { useSubmisionStore } from "../store/useSubmissionStrore";
 
 const ProblemPage = () => {
   const { id } = useParams();
-
+  const {
+    submission: submissions,
+    isLoading: isSubmissionsLoading,
+    submissionCount,
+    getSubmissionForProblem,
+    getSubmissionCountForProblem,
+  } = useSubmisionStore();
   const { getProblemById, problem, isProblemLoading } = useProblemStore();
   const [code, setCode] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("javascript");
   const [activeTab, setActiveTab] = useState("description");
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [testcases, setTestCases] = useState([]);
-  const submissionCount = 10;
-  
+
   const { executeCode, submission, isExecuting } = useExecutionStore();
   const handleLanguageChange = (e) => {
     const lang = e.target.value;
@@ -42,11 +49,12 @@ const ProblemPage = () => {
 
   useEffect(() => {
     getProblemById(id);
+    getSubmissionCountForProblem(id);
   }, [id]);
   console.log(problem);
   useEffect(() => {
     if (problem) {
-      setCode (problem.codeSnippets?.[selectedLanguage] || "");
+      setCode(problem.codeSnippets?.[selectedLanguage] || "");
       setTestCases(
         problem.testcases?.map((tc) => ({
           input: tc.input,
@@ -55,6 +63,12 @@ const ProblemPage = () => {
       );
     }
   }, [problem, selectedLanguage]);
+  useEffect(() => {
+    if (activeTab === "submissions" && id) {
+      getSubmissionForProblem(id);
+    }
+  }, [activeTab, id]);
+  console.log("my submission", submissions);
   const renderTabContent = () => {
     if (!problem) return null;
 
@@ -119,9 +133,10 @@ const ProblemPage = () => {
         );
       case "submissions":
         return (
-          <div className="p-4 text-center text-base-content/70">
-            No submision yet
-          </div>
+          <SubmissionList
+            submission={submissions}
+            isloading={isSubmissionsLoading}
+          />
         );
       case "discussion":
         return (
@@ -149,18 +164,17 @@ const ProblemPage = () => {
         return null;
     }
   };
-const handelruncode = (e)=>{
-  e.preventDefault()
-  try{
-    const language_id = getLanguageId(selectedLanguage);
-    const stdin = problem.testcases.map((tc)=>tc.input)
-    const expected_output = problem.testcases.map((tc)=>tc.output)
-    executeCode(code, language_id, stdin, expected_output, id);
-
-  }catch(err){
-      console.log(err)
-  }
-}
+  const handelruncode = (e) => {
+    e.preventDefault();
+    try {
+      const language_id = getLanguageId(selectedLanguage);
+      const stdin = problem.testcases.map((tc) => tc.input);
+      const expected_output = problem.testcases.map((tc) => tc.output);
+      executeCode(code, language_id, stdin, expected_output, id);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   if (isProblemLoading || !problem) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-base-300 to-base-200 flex items-center justify-center">
@@ -304,7 +318,7 @@ const handelruncode = (e)=>{
               <div className="p-4 border-t border-base-300 bg-base-200">
                 <div className="flex justify-between items-center">
                   <button
-                    className={`btn btn-primary gap-2 ${isExecuting ? "loading": ""} `}
+                    className={`btn btn-primary gap-2 ${isExecuting ? "loading" : ""} `}
                     onClick={handelruncode}
                     disabled={isExecuting}
                   >
@@ -323,7 +337,7 @@ const handelruncode = (e)=>{
       <div className="card bg-base-100 shadow-xl mt-6">
         <div className="card-body">
           {submission ? (
-            <SubmissionResults submission={submission}/>
+            <Submission submission={submission} />
           ) : (
             <>
               <div className="flex items-center justify-between mb-6">
