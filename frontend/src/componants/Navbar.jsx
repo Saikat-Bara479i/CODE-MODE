@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import {User,Code,LogOut} from "lucide-react"
 import { useAuthStore } from '../store/useAuthStore'
 import LogoutButton from './LogoutButton'
-import bmwLogo from "../assets/bmw-logo-svgrepo-com.svg";
+import bmwLogo from "../assets/xhamster-3.svg";
 
 
 const Navbar = () => {

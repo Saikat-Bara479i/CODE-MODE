@@ -158,7 +158,7 @@ const handelruncode = (e)=>{
     executeCode(code, language_id, stdin, expected_output, id);
 
   }catch(err){
-
+      console.log(err)
   }
 }
   if (isProblemLoading || !problem) {
