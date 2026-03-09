@@ -1,17 +1,7 @@
-Here is your content cleaned up and properly formatted as a complete, ready-to-use **`README.md`** file (with corrected markdown syntax, consistent spacing, fixed code blocks, and proper escaping where needed).
 
-You can copy-paste this directly into your repository:
 
-```markdown
-# 🚀 CODE-MODE
 
-![GitHub repo size](https://img.shields.io/github/repo-size/Saikat-Bara479i/CODE-MODE)
-![GitHub stars](https://img.shields.io/github/stars/Saikat-Bara479i/CODE-MODE)
-![GitHub forks](https://img.shields.io/github/forks/Saikat-Bara479i/CODE-MODE)
-![GitHub issues](https://img.shields.io/github/issues/Saikat-Bara479i/CODE-MODE)
-![License](https://img.shields.io/github/license/Saikat-Bara479i/CODE-MODE)
-
-A **Full-Stack Online Coding Platform** where users can write, run, and test code directly in the browser.
+## A Full-Stack Online Coding Platform** where users can write, run, and test code directly in the browser.
 
 The platform integrates a **React frontend, Node.js backend, PostgreSQL database, and Judge0 execution engine** to simulate a mini **online judge system** similar to LeetCode or HackerRank.
 
