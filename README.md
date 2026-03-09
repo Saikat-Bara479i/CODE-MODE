@@ -1,97 +1,209 @@
-# LeetPROJECT
+Here is your content cleaned up and properly formatted as a complete, ready-to-use **`README.md`** file (with corrected markdown syntax, consistent spacing, fixed code blocks, and proper escaping where needed).
 
-LeetPROJECT is a full-stack web application for creating, browsing, and solving programming problems. It includes a Node.js + Prisma backend (APIs, authentication, problem & submission management, code execution integration) and a React + Vite frontend UI.
+You can copy-paste this directly into your repository:
 
-## Features
+```markdown
+# 🚀 CODE-MODE
 
-- User authentication (signup / login)
-- Create, edit, and list problems
-- Submit solutions and view submissions
-- Execute code using the integrated judge (Judge0-like) library
-- Playlists and problem grouping
+![GitHub repo size](https://img.shields.io/github/repo-size/Saikat-Bara479i/CODE-MODE)
+![GitHub stars](https://img.shields.io/github/stars/Saikat-Bara479i/CODE-MODE)
+![GitHub forks](https://img.shields.io/github/forks/Saikat-Bara479i/CODE-MODE)
+![GitHub issues](https://img.shields.io/github/issues/Saikat-Bara479i/CODE-MODE)
+![License](https://img.shields.io/github/license/Saikat-Bara479i/CODE-MODE)
 
-## Repository Structure
+A **Full-Stack Online Coding Platform** where users can write, run, and test code directly in the browser.
 
-- `backend/` — Node.js server with Prisma, Express routes, and code-execution integrations
-- `frontend/` — React app (Vite) with UI components and state stores
-
-## Prerequisites
-
-- Node.js (v16+ recommended)
-- npm (or yarn)
-- PostgreSQL (or other database supported by Prisma) and a configured `DATABASE_URL`
-
-## Backend — Setup & Run
-
-1. Change to the backend folder:
-
-   npm --workspace backend install
-
-   or
-
-   cd backend
-   npm install
-
-2. Configure environment variables in `backend/.env` (create one if missing):
-
-- `DATABASE_URL` — your Postgres connection string
-- `JWT_SECRET` — secret for signing auth tokens
-
-3. Generate Prisma client and run migrations:
-
-   npx prisma generate
-   npx prisma migrate dev --name init
-
-4. Start the backend in development mode:
-
-   npm run dev
-
-The backend exposes API routes under `/api` (see `src/routes/`). Key endpoints include auth, problems, submissions, playlists, and execute-code.
-
-## Frontend — Setup & Run
-
-1. Change to the frontend folder and install:
-
-   cd frontend
-   npm install
-
-2. Configure frontend environment variables (if needed):
-
-- `VITE_API_URL` — base URL for the backend API (e.g. `http://localhost:4000/api`)
-
-3. Start the development server:
-
-   npm run dev
-
-Open the UI at the address printed by Vite (typically `http://localhost:5173`).
-
-## Database & Prisma
-
-- Prisma schema is in `backend/prisma/schema.prisma`. Migrations are tracked in `backend/prisma/migrations/`.
-- Use `npx prisma studio` to explore data during development.
-
-## Environment Notes
-
-- Keep secrets out of source control. Add `backend/.env` to `.gitignore` if not already ignored.
-
-## Development Tips
-
-- To run only backend or frontend, use the respective `npm run dev` in its folder.
-- The backend integrates a judge/execution library (`libs/judge0.libs.js`) — ensure any API keys or external endpoints required by that integration are configured.
-
-## Contributing
-
-- Fork the repo, create a topic branch, and open a pull request with a clear description.
-
-## License
-
-This project does not include a license file. Add one if you plan to publish.
+The platform integrates a **React frontend, Node.js backend, PostgreSQL database, and Judge0 execution engine** to simulate a mini **online judge system** similar to LeetCode or HackerRank.
 
 ---
 
-If you want, I can also:
+## ✨ Features
 
-- add a `.env.example` in `backend/`,
-- add quick-start scripts in the monorepo root, or
-- run the app locally and verify both servers start. Which would you like next?
+- 🧑‍💻 Online Code Editor
+- ⚡ Real-time Code Execution
+- 🐳 Docker-based Judge0 Integration
+- 📦 PostgreSQL Database with Prisma ORM
+- 🔐 Backend API for Code Submissions
+- 🌐 Modern React Frontend (Vite)
+
+---
+
+## 🏗 System Architecture
+
+```
+User
+│
+▼
+Frontend (React + Vite)
+│
+▼
+Backend API (Node.js + Express)
+│
+├── PostgreSQL Database (Prisma ORM)
+│
+▼
+Judge0 Execution Engine (Docker)
+```
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+- React
+- Vite
+- Axios
+- Tailwind CSS
+
+### Backend
+- Node.js
+- Express.js
+- Prisma ORM
+
+### Database
+- PostgreSQL
+
+### Code Execution
+- Judge0
+- Docker
+
+---
+
+## 📂 Project Structure
+
+```
+CODE-MODE
+│
+├── frontend/          # React frontend
+│
+├── backend/           # Express backend API
+│
+├── prisma/            # Prisma schema & migrations
+│
+├── docker/            # Judge0 Docker configuration
+│
+└── README.md
+```
+
+---
+
+## ⚙️ Local Setup
+
+### 1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/Saikat-Bara479i/CODE-MODE.git
+cd CODE-MODE
+```
+
+---
+
+### 🔧 Backend Setup
+
+```bash
+cd backend
+npm install
+```
+
+Create `.env` file:
+
+```env
+DATABASE_URL="your_postgres_connection_string"
+JUDGE0_URL=http://localhost:2358
+PORT=5000
+```
+
+Run backend:
+
+```bash
+npm start
+```
+
+---
+
+### 💻 Frontend Setup
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend runs at:  
+**http://localhost:5173**
+
+---
+
+### 🐳 Running Judge0
+
+Install Docker, then:
+
+```bash
+git clone https://github.com/judge0/judge0.git
+cd judge0
+docker compose up -d
+```
+
+Judge0 API will be available at:  
+**http://localhost:2358**
+
+---
+
+### 🗄 Database Setup
+
+```bash
+npx prisma migrate dev
+npx prisma generate
+```
+
+---
+
+## 📸 Screenshots
+
+*(Add screenshots of your UI here)*
+
+Examples:
+
+```text
+screenshots/editor.png
+screenshots/output.png
+screenshots/submission.png
+```
+
+---
+
+## 📈 Future Improvements
+
+- User Authentication (JWT / OAuth)
+- Problem Library & Categories
+- Online Coding Contests
+- Leaderboard System
+- Code Submission History
+- AI-based Code Suggestions / Autocomplete
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 👨‍💻 Author
+
+**Saikat Barai**  
+GitHub: [https://github.com/Saikat-Bara479i](https://github.com/Saikat-Bara479i)
+
+---
+
+## Flow🚤
+User ------>ADMIN--->CREATE PROBLEM------>(TEST CASES, CODESNIPPET, REFERNCE SOLUTION)------>CHECK VIA JUDGE0(StdOut==expectedOutput)->SAVE IN DB
+User---->USER---->GET PROBLEM---->EXECUTE CODE---->LOOP THROUGH EACH TEST CASES---->IF FAILS STOP🫷---->ELSE SAVE IN DB---->STORE INDIVIDUAL TEST CASES---->FETCH SUBNMISSION
+
 
