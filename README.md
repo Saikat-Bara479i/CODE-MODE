@@ -121,6 +121,7 @@ npm run dev
 
 Frontend runs at:  
 **http://localhost:5173**
+For more detail go to **https://github.com/judge0/judge0/blob/master/CHANGELOG.md**
 
 ---
 
