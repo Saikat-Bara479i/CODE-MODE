@@ -165,7 +165,7 @@ screenshots/submission.png
 
 ## 📈 Future Improvements
 
-- User Authentication (JWT / OAuth)
+- User Authentication improvement with OpenID( OAuth)
 - Problem Library & Categories
 - Online Coding Contests
 - Leaderboard System
@@ -194,7 +194,49 @@ GitHub: [https://github.com/Saikat-Bara479i](https://github.com/Saikat-Bara479i)
 ---
 
 ## Flow🚤
-User ------>ADMIN--->CREATE PROBLEM------>(TEST CASES, CODESNIPPET, REFERNCE SOLUTION)------>CHECK VIA JUDGE0(StdOut==expectedOutput)->SAVE IN DB
-User---->USER---->GET PROBLEM---->EXECUTE CODE---->LOOP THROUGH EACH TEST CASES---->IF FAILS STOP🫷---->ELSE SAVE IN DB---->STORE INDIVIDUAL TEST CASES---->FETCH SUBNMISSION
+Admin
+  │
+  ▼
+Create Problem
+  │
+  ├── Add Test Cases
+  ├── Add Code Snippet
+  └── Add Reference Solution
+  │
+  ▼
+Validate using Judge0
+  │
+  ├── Execute Code
+  ├── Compare StdOut with Expected Output
+  │
+  ▼
+If Valid → Save Problem in Database
+
+
+
+
+User
+  │
+  ▼
+Fetch Problem
+  │
+  ▼
+Write Code
+  │
+  ▼
+Execute Code
+  │
+  ▼
+Run Against Test Cases
+  │
+  ├── Test Case 1
+  ├── Test Case 2
+  ├── Test Case 3
+  │
+  ▼
+If Any Test Case Fails ❌
+   Stop Execution
+Else ✅
+   Save Submission
 
 
