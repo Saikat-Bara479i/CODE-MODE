@@ -238,5 +238,89 @@ If Any Test Case Fails ❌
    Stop Execution
 Else ✅
    Save Submission
+# Project Architecture Diagram
+
+```mermaid
+flowchart LR
+    U[User or Admin Browser]
+
+    subgraph FE[Frontend - React + Vite]
+      R[React Router Pages\nHome/Login/Signup/Problem/AddProblem]
+      Z[Zustand Stores\nuseAuth/useProblem/useExecution/useSubmission]
+      AX[Axios Client\nbaseURL /api/v1\nwithCredentials=true]
+      R --> Z --> AX
+    end
+
+    subgraph BE[Backend - Node.js + Express]
+      EX[Express App\nindex.js]
+      MW[Auth Middleware\nJWT from httpOnly cookie]
+
+      subgraph API[Route Groups]
+        A1[/auth]
+        A2[/problems]
+        A3[/execute-code]
+        A4[/submissions]
+        A5[/playlists]
+      end
+
+      subgraph CTRL[Controllers]
+        C1[auth.controller]
+        C2[problem.controller]
+        C3[executecode.controller]
+        C4[submission.controller]
+        C5[playlist.controller]
+      end
+
+      DBL[Prisma Client db.js]
+      J0[judge0.libs.js\nsubmit batch + poll results]
+
+      EX --> MW
+      MW --> API
+      API --> CTRL
+      CTRL --> DBL
+      C3 --> J0
+    end
+
+    PG[(PostgreSQL\nPrisma schema)]
+    JUDGE[[Judge0 API\nExternal Code Execution]]
+
+    AX -->|HTTP + Cookie JWT| EX
+    DBL --> PG
+    J0 --> JUDGE
+
+    subgraph MODELS[Core DB Models]
+      M1[User]
+      M2[Problem]
+      M3[Submission]
+      M4[TestCasesResult]
+      M5[ProblemSolved]
+      M6[Playlist + ProblemPlaylist]
+    end
+
+    PG --- MODELS
+```
+
+## Main request flow
+
+```mermaid
+sequenceDiagram
+    participant UI as Frontend UI
+    participant API as Express API
+    participant AUTH as authMiddleware
+    participant EXEC as execute.controller
+    participant J0 as Judge0
+    participant DB as PostgreSQL via Prisma
+
+    UI->>API: POST /api/v1/execute-code
+    API->>AUTH: Validate jwt cookie
+    AUTH-->>API: req.user
+    API->>EXEC: source_code, language_id, stdin[], expected_output[]
+    EXEC->>J0: submit batch
+    EXEC->>J0: poll batch until completed
+    EXEC->>DB: create Submission + TestCasesResult[]
+    EXEC->>DB: upsert ProblemSolved (if all passed)
+    DB-->>EXEC: saved rows
+    EXEC-->>UI: submission with testcase details
+```
 
 
