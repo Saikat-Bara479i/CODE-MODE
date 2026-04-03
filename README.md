@@ -151,7 +151,7 @@ npx prisma generate
 
 ## 📸 Screenshots
 
-*(Add screenshots of your UI here)*
+
 
 Examples:
 
